@@ -1,0 +1,5 @@
+<ng-container *ngIf="jokes$ | async as jokes">
+  <ul>
+    <li *ngFor="let joke of jokes">{{ joke.value }}</li>
+  </ul>
+</ng-container>
