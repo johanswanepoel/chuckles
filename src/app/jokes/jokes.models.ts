@@ -7,3 +7,12 @@ export interface IJoke {
   created_at: string;
   updated_at: string;
 }
+
+export interface IJokeState {
+  jokes: IJoke[],
+  favouriteJokes: IJoke[],
+  timer: {
+    isActive: boolean,
+    interval: number
+  }
+}

@@ -1,5 +1,25 @@
+Chuckles
+
 <ng-container *ngIf="jokes$ | async as jokes">
   <ul>
-    <li *ngFor="let joke of jokes">{{ joke.value }}</li>
+    <li *ngFor="let joke of jokes" (click)="addToFavourites(joke)">{{ joke.value }}</li>
   </ul>
 </ng-container>
+
+<ng-container *ngIf="favouriteJokes$| async as favJokes">
+  <ul>
+    <li *ngFor="let joke of favJokes" (click)="removeFromFavourites(joke.id)">{{ joke.value }}</li>
+  </ul>
+</ng-container>
+
+
+<ng-container *ngIf="timer$ | async as timer" >
+  <button (click)="toggleTimer(timer.isActive)">
+    {{ timer.isActive ? 'Stop' : 'Start' }}
+  </button>
+</ng-container>
+
+
+
+
+

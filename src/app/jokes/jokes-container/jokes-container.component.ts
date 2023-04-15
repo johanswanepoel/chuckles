@@ -1,7 +1,10 @@
+import { IJoke, IJokeState } from '../jokes.models';
+import {Store, select} from '@ngrx/store'
+import { selectFavouriteJokes, selectJokes, selectTimer } from '../store/jokes.selectors';
+
 import { Component } from '@angular/core';
-import { IJoke } from '../jokes.models';
-import { JokesService } from '../jokes.service';
 import { Observable } from 'rxjs';
+import jokesActions from '../store/jokes.actions';
 
 @Component({
   selector: 'app-jokes-container',
@@ -10,10 +13,31 @@ import { Observable } from 'rxjs';
 })
 export class JokesContainerComponent {
   public jokes$: Observable<IJoke[]>;
+  public favouriteJokes$: Observable<IJoke[]>;
+  public timer$: Observable<{ isActive: boolean; interval: number; }>;
 
-  constructor(private jokeService: JokesService) {}
+  constructor(private store: Store<IJokeState>) {}
 
   ngOnInit(): void {
-    this.jokes$ = this.jokeService.getManyJokes(10);
+    this.store.dispatch(jokesActions.getJokes({count: 10}))
+    this.jokes$ = this.store.pipe(select((selectJokes)))
+    this.favouriteJokes$ = this.store.pipe(select(selectFavouriteJokes))
+    this.timer$ = this.store.pipe(select(selectTimer))
+  }
+
+  addToFavourites(jokeToAdd: IJoke): void {
+    this.store.dispatch(jokesActions.addFavouriteJoke({jokeToAdd}))
+  }
+
+  removeFromFavourites(jokeId: string): void {
+    this.store.dispatch(jokesActions.removeFavouriteJoke({jokeId}))
+  }
+
+  toggleTimer(isActive: boolean) {
+  
+   this.store.dispatch(jokesActions.setTimer({isActive: !isActive}))
+
   }
 }
+
+
