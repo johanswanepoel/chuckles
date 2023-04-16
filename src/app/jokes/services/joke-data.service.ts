@@ -1,5 +1,5 @@
 import { FAVOURITE_JOKES_KEY, IJoke } from '../jokes.models'
-import { parseJSON, stringifyJSON } from 'src/app/utils'
+import { parseJSON, stringifyJSON } from '../../utils'
 
 import { Injectable } from '@angular/core'
 

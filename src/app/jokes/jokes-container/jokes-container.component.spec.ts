@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { JokesContainerComponent } from './jokes-container.component'
+import { provideMockStore } from '@ngrx/store/testing'
 
 describe('JokesContainerComponent', () => {
     let component: JokesContainerComponent
@@ -9,6 +10,7 @@ describe('JokesContainerComponent', () => {
     beforeEach(async () => {
         await TestBed.configureTestingModule({
             declarations: [JokesContainerComponent],
+            providers: [provideMockStore({})]
         }).compileComponents()
 
         fixture = TestBed.createComponent(JokesContainerComponent)

@@ -4,7 +4,7 @@ import { Observable, forkJoin, of } from 'rxjs'
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { JokeDataService } from './joke-data.service'
-import { environment } from 'src/environments/environment.prod'
+import { environment } from './../../../environments/environment.prod'
 
 @Injectable({
     providedIn: 'root',

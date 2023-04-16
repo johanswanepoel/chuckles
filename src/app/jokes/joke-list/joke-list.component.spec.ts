@@ -13,6 +13,7 @@ describe('JokeListComponent', () => {
 
         fixture = TestBed.createComponent(JokeListComponent)
         component = fixture.componentInstance
+        component.jokes = []
         fixture.detectChanges()
     })
 
