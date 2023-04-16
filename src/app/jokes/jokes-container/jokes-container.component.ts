@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit, } from '@angular/core';
 import { IJoke, IJokeState } from '../jokes.models';
-import { Observable, Subject, Subscription, interval, map, takeUntil, takeWhile, tap } from 'rxjs';
-import {Store, select} from '@ngrx/store'
-import { selectFavouriteJokes, selectJokes, selectTimer } from '../store/jokes.selectors';
+import { Observable, Subject, Subscription, filter, interval, map, mergeMap, repeat, switchMap, takeUntil, takeWhile, tap } from 'rxjs';
+import { Store, select } from '@ngrx/store'
+import { selectJokes, selectTimer } from '../store/jokes.selectors';
 
 import jokesActions from '../store/jokes.actions';
 
@@ -12,51 +12,49 @@ import jokesActions from '../store/jokes.actions';
   styleUrls: ['./jokes-container.component.scss']
 })
 export class JokesContainerComponent implements OnInit, OnDestroy {
-  
+
   public jokes$: Observable<IJoke[]>;
   public favouriteJokes$: Observable<IJoke[]>;
   public timer$: Observable<{ isActive: boolean; interval: number; }>;
-  public timer: { isActive: boolean; interval: number; }
   private intervalSubscription: Subscription;
-  private timerSubscription: Subscription;
+  private onDestroy$: Subject<void> = new Subject<void>()
 
-  constructor(private store: Store<IJokeState>) {}
+  constructor(private store: Store<IJokeState>) { }
 
   ngOnInit(): void {
-    this.store.dispatch(jokesActions.getJokes({count: 10}))
+    this.store.dispatch(jokesActions.getJokes({ count: 10 }))
     this.jokes$ = this.store.pipe(select((selectJokes)));
-    this.timerSubscription = this.store.pipe(select(selectTimer)).subscribe((timer) => {
-      this.timer = timer
-    })
+    this.timer$ = this.store.pipe(select(selectTimer));
+    this.startGettingJobsAtIntervals(5000)
   }
 
   ngOnDestroy(): void {
     this.intervalSubscription?.unsubscribe();
-    this.timerSubscription.unsubscribe();
-    this.store.dispatch(jokesActions.setTimer({isActive: false}))
+    this.store.dispatch(jokesActions.setTimer({ isActive: false }))
+    this.onDestroy$.next()
   }
 
   addToFavourites(jokeToAdd: IJoke): void {
-    this.store.dispatch(jokesActions.addFavouriteJoke({jokeToAdd}))
+    this.store.dispatch(jokesActions.addFavouriteJoke({ jokeToAdd }))
   }
 
   removeFromFavourites(jokeId: string): void {
-    this.store.dispatch(jokesActions.removeFavouriteJoke({jokeId}))
+    this.store.dispatch(jokesActions.removeFavouriteJoke({ jokeId }))
   }
 
-  toggleTimer(isActive: boolean) {
-   this.store.dispatch(jokesActions.setTimer({isActive: !isActive}))
-   this.startGettingJobsAtIntervals()
+  toggleTimer({ isActive }: { isActive: boolean }) {
+    this.store.dispatch(jokesActions.setTimer({ isActive: !isActive }))
   }
 
-  startGettingJobsAtIntervals() {
-    const jobsInterval = interval(this.timer.interval).pipe(takeWhile(() => this.timer.isActive))
-
-    this.intervalSubscription = jobsInterval.subscribe(() => {
-     this.store.dispatch(jokesActions.getOneJoke())
-    })
+  startGettingJobsAtIntervals(timeInterval: number) {
+    this.intervalSubscription = interval(timeInterval).pipe(
+      switchMap(() => this.timer$), 
+      takeWhile((data) => data.isActive),
+      takeUntil(this.onDestroy$),
+      repeat(),
+      map(() => this.store.dispatch(jokesActions.getOneJoke()))).subscribe()
   }
-  
+
 }
 
 

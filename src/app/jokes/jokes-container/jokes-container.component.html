@@ -1,5 +1,5 @@
-<ng-container *ngIf="timer">
-  <button class="start" (click)="toggleTimer(timer.isActive)">
+<ng-container *ngIf="timer$ | async as timer">
+  <button class="start" (click)="toggleTimer(timer)">
     {{ timer.isActive ? 'Stop' : 'Start' }}
   </button>
 </ng-container>
