@@ -2,9 +2,12 @@
 <div class="joke-list-wrapper">
   <ul>
     <li  *ngFor="let joke of jokes" >
-      <button (click)="addToFavourites(joke)">+</button> {{ joke.value }}
+      <button *ngIf="canAdd" (click)="addToFavourites(joke)">+</button>
+      <button *ngIf="canRemove" (click)="removeFromFavourites(joke.id)">-</button> 
+      {{ joke.value }}
     </li>
   </ul>
+  <p *ngIf="jokes.length < 1">No items to display</p>
 </div>
 
 

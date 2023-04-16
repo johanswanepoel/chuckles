@@ -22,7 +22,6 @@ export class JokesContainerComponent implements OnInit {
   ngOnInit(): void {
     this.store.dispatch(jokesActions.getJokes({count: 10}))
     this.jokes$ = this.store.pipe(select((selectJokes)))
-    this.favouriteJokes$ = this.store.pipe(select(selectFavouriteJokes))
     this.timer$ = this.store.pipe(select(selectTimer))
   }
 

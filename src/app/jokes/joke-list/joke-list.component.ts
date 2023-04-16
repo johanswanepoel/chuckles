@@ -10,10 +10,17 @@ import { IJoke } from '../jokes.models';
 export class JokeListComponent  {
 
   @Input() jokes: IJoke[];
+  @Input() canAdd: boolean;
+  @Input() canRemove: boolean;
   @Output() addedToFavourites: EventEmitter<IJoke> = new EventEmitter<IJoke>()
+  @Output() removedFromFavourites: EventEmitter<string> = new EventEmitter<string>()
   
-  addToFavourites(joke: IJoke) {
+  addToFavourites(joke: IJoke): void {
     this.addedToFavourites.emit(joke)
+  }
+
+  removeFromFavourites(jokeId: string): void {
+    this.removedFromFavourites.emit(jokeId)
   }
 
 }
