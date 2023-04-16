@@ -1,5 +1,5 @@
 import { IJoke, JOKES_KEY } from '../jokes.models'
-import { Observable, forkJoin, of, tap } from 'rxjs'
+import { Observable, forkJoin, of } from 'rxjs'
 
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'

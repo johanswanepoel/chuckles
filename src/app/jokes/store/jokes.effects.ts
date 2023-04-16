@@ -1,6 +1,6 @@
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { FAVOURITE_JOKES_KEY, IJokeState, JOKES_KEY } from '../jokes.models'
-import { catchError, map, mergeMap, tap, withLatestFrom } from 'rxjs/operators'
+import { catchError, map, mergeMap, withLatestFrom } from 'rxjs/operators'
 import { selectFavouriteJokes, selectJokes } from './jokes.selectors'
 
 import { EMPTY } from 'rxjs'

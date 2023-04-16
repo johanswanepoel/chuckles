@@ -4,15 +4,12 @@ import {
     Observable,
     Subject,
     Subscription,
-    filter,
     interval,
     map,
-    mergeMap,
     repeat,
     switchMap,
     takeUntil,
     takeWhile,
-    tap,
 } from 'rxjs'
 import { Store, select } from '@ngrx/store'
 import { selectJokes, selectTimer } from '../store/jokes.selectors'
