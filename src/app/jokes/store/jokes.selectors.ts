@@ -1,9 +1,7 @@
+import { IJokeState, JOKES_REDUCER_KEY } from "../jokes.models";
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 
-import { IJokeState } from "../jokes.models";
-import { jokesFeatureKey } from "./jokes.reducer";
-
-const selectJokesFeature = createFeatureSelector<IJokeState>(jokesFeatureKey);
+const selectJokesFeature = createFeatureSelector<IJokeState>(JOKES_REDUCER_KEY);
 
 export const selectJokes = createSelector(selectJokesFeature, (state: IJokeState) => state.jokes);
 export const selectFavouriteJokes = createSelector(selectJokesFeature, (state: IJokeState) => state.favouriteJokes);

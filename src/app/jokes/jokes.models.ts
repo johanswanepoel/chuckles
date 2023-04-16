@@ -1,3 +1,7 @@
+export const FAVOURITE_JOKES_KEY = 'favourite_jokes'
+export const JOKES_KEY = 'jokes'
+export const JOKES_REDUCER_KEY = 'chuck_jokes'
+
 export interface IJoke {
   icon_url: string;
   id: string;

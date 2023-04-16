@@ -1,8 +1,9 @@
+import { IJoke, JOKES_KEY } from '../jokes.models';
 import { Observable, forkJoin, of, tap } from 'rxjs';
 
 import { HttpClient } from '@angular/common/http';
-import { IJoke } from './jokes.models';
 import { Injectable } from '@angular/core';
+import { JokeDataService } from './joke-data.service';
 import { environment } from 'src/environments/environment.prod';
 
 @Injectable({
@@ -11,9 +12,9 @@ import { environment } from 'src/environments/environment.prod';
 export class JokesService {
 
   private readonly urlRandomChuckJoke: string = `${environment.chuckNorrisJokesEndPointUrl}/jokes/random`;
-  
 
-  constructor(private http: HttpClient) {}
+
+  constructor(private http: HttpClient, private jokeDataService: JokeDataService) { }
 
   public getOneJoke(): Observable<IJoke> {
     return this.http.get<IJoke>(this.urlRandomChuckJoke);
@@ -21,25 +22,13 @@ export class JokesService {
 
   public getManyJokes(count: number): Observable<IJoke[]> {
     const jokes: IJoke[] = new Array(count).fill({});
+    const savedJokes = this.jokeDataService.retrieveJokeData(JOKES_KEY);
 
-    const savedJokes = localStorage.getItem('jokes')
-
-    if (savedJokes != null) {
-      return this.getJokesFromLocalStorage();
+    if (savedJokes.length) {
+      return of(savedJokes)
     }
 
-     return forkJoin(jokes.map(this.getOneJoke.bind(this))).pipe(tap(jokes => {
-      this.setLocalStorage(jokes)
-   
-    }));
-
+    return forkJoin(jokes.map(this.getOneJoke.bind(this)));
   }
 
-  private setLocalStorage(jokes: IJoke[]) {
-    localStorage.setItem('jokes', JSON.stringify(jokes))
-  }
-
-  private getJokesFromLocalStorage(): Observable<IJoke[]> {
-    return of(JSON.parse(localStorage.getItem('jokes') ?? '[]') as IJoke[]);
-  }
 }

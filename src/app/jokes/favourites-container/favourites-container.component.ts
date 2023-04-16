@@ -1,9 +1,10 @@
 import { IJoke, IJokeState } from '../jokes.models';
+import { Observable, combineLatest, forkJoin, map, of, tap } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import { selectFavouriteJokes, selectJokes, selectTimer } from '../store/jokes.selectors';
 
 import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
+import { JokeDataService } from '../services/joke-data.service';
 import jokesActions from '../store/jokes.actions';
 
 @Component({
@@ -16,11 +17,11 @@ export class FavouritesContainerComponent {
   public favouriteJokes$: Observable<IJoke[]>;
   public timer$: Observable<{ isActive: boolean; interval: number; }>;
 
-  constructor(private store: Store<IJokeState>) {}
+  constructor(private store: Store<IJokeState>, private jokeDataService: JokeDataService) {}
 
   ngOnInit(): void {
-    this.favouriteJokes$ = this.store.pipe(select(selectFavouriteJokes))
-
+    this.favouriteJokes$ = 
+      this.store.pipe(select(selectFavouriteJokes))
   }
 
   removeFromFavourites(jokeId: string): void {

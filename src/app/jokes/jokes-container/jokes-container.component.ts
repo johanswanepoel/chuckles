@@ -38,10 +38,6 @@ export class JokesContainerComponent implements OnInit, OnDestroy {
     this.store.dispatch(jokesActions.addFavouriteJoke({ jokeToAdd }))
   }
 
-  removeFromFavourites(jokeId: string): void {
-    this.store.dispatch(jokesActions.removeFavouriteJoke({ jokeId }))
-  }
-
   toggleTimer({ isActive }: { isActive: boolean }) {
     this.store.dispatch(jokesActions.setTimer({ isActive: !isActive }))
   }
