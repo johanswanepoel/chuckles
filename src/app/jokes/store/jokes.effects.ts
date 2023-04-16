@@ -19,6 +19,16 @@ export class JokesEffects {
   )
   );
 
+  getOneJoke$ = createEffect(() => this.actions$.pipe(
+    ofType(JokeActions.getOneJoke),
+    mergeMap(() => this.jokesService.getOneJoke()
+      .pipe(
+        map(joke => JokeActions.getOneJokeSuccess({ joke })),
+        catchError(() => EMPTY)
+      ))
+  )
+  );
+
   constructor(
     private actions$: Actions,
     private jokesService: JokesService

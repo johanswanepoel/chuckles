@@ -1,21 +1,11 @@
 <ng-container *ngIf="jokes$ | async as jokes">
- <app-joke-list 
- [canAdd]="true"
- [jokes]="jokes" 
- (addedToFavourites)="addToFavourites($event)" 
- (removedFromFavourites)="($event)">
-</app-joke-list>
+  <app-joke-list [canAdd]="true" [jokes]="jokes" (addedToFavourites)="addToFavourites($event)"
+    (removedFromFavourites)="($event)">
+  </app-joke-list>
 </ng-container>
 
-<ng-container *ngIf="timer$ | async as timer" >
+<ng-container *ngIf="timer">
   <button (click)="toggleTimer(timer.isActive)">
     {{ timer.isActive ? 'Stop' : 'Start' }}
   </button>
 </ng-container>
-
-
-
-
-
-
-
