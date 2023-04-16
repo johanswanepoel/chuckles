@@ -1,8 +1,8 @@
+import { Component, OnInit, } from '@angular/core';
 import { IJoke, IJokeState } from '../jokes.models';
 import {Store, select} from '@ngrx/store'
 import { selectFavouriteJokes, selectJokes, selectTimer } from '../store/jokes.selectors';
 
-import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import jokesActions from '../store/jokes.actions';
 
@@ -11,7 +11,8 @@ import jokesActions from '../store/jokes.actions';
   templateUrl: './jokes-container.component.html',
   styleUrls: ['./jokes-container.component.scss']
 })
-export class JokesContainerComponent {
+export class JokesContainerComponent implements OnInit {
+  
   public jokes$: Observable<IJoke[]>;
   public favouriteJokes$: Observable<IJoke[]>;
   public timer$: Observable<{ isActive: boolean; interval: number; }>;
@@ -34,10 +35,9 @@ export class JokesContainerComponent {
   }
 
   toggleTimer(isActive: boolean) {
-  
    this.store.dispatch(jokesActions.setTimer({isActive: !isActive}))
-
   }
+  
 }
 
 

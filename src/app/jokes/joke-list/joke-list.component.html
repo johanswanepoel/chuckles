@@ -1,0 +1,11 @@
+
+<div class="joke-list-wrapper">
+  <ul>
+    <li  *ngFor="let joke of jokes" >
+      <button (click)="addToFavourites(joke)">+</button> {{ joke.value }}
+    </li>
+  </ul>
+</div>
+
+
+

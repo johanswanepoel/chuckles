@@ -2,6 +2,7 @@ import { jokesFeatureKey, reducer } from './store/jokes.reducer';
 
 import { CommonModule } from '@angular/common';
 import {EffectsModule} from '@ngrx/effects'
+import { JokeListComponent } from './joke-list/joke-list.component';
 import { JokesContainerComponent } from './jokes-container/jokes-container.component';
 import { JokesEffects } from './store/jokes.effects';
 import { NgModule } from '@angular/core';
@@ -10,7 +11,8 @@ import { StoreModule } from '@ngrx/store';
 
 @NgModule({
   declarations: [
-    JokesContainerComponent
+    JokesContainerComponent,
+    JokeListComponent
   ],
   imports: [
     CommonModule,
