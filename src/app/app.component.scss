@@ -1,17 +1,15 @@
 header {
-  background-color: blue;
-  padding: 20px;
-  
-  nav {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: center;
-    a {
-      color: lightgreen;
-      margin: 4px;
+    background-color: blue;
+    padding: 20px;
+
+    nav {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: center;
+        a {
+            color: lightgreen;
+            margin: 4px;
+        }
     }
-  }
-
 }
-

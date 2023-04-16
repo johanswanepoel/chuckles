@@ -1,4 +1,8 @@
 <ng-container *ngIf="favouriteJokes$ | async as jokes">
-  <app-joke-list [canRemove]="true" [jokes]="jokes" (addedToFavourites)="removeFromFavourites($event.id)"
-    (removedFromFavourites)="removeFromFavourites($event)"></app-joke-list>
+    <app-joke-list
+        [canRemove]="true"
+        [jokes]="jokes"
+        (addedToFavourites)="removeFromFavourites($event.id)"
+        (removedFromFavourites)="removeFromFavourites($event)"
+    ></app-joke-list>
 </ng-container>

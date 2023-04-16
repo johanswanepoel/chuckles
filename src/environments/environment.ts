@@ -1,3 +1,3 @@
 export const environment = {
-  chuckNorrisJokesEndPointUrl: 'https://api.chucknorris.io',
-};
+    chuckNorrisJokesEndPointUrl: 'https://api.chucknorris.io',
+}
