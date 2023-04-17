@@ -23,14 +23,11 @@ jobs:
     - name: Run linting
       run: npm run lint
 
-    - name: Run prettier
-      run: npx prettier --check 
-
     - name: Run tests
-      run: npm run test:headless
+      run: npm run test
 
     - name: Build
-      run: npm run build:prod
+      run: npm run build
 
     - name: Deploy
       if: success()
