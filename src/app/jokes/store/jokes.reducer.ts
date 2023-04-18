@@ -7,9 +7,9 @@ import {
 } from '../jokes.models'
 
 import JokeActions from './jokes.actions'
-import { parseJSON } from 'src/app/utils'
+import { parseJSON } from './../../utils'
 
-const initialState: IJokeState = {
+export const initialState: IJokeState = {
     jokes: parseJSON<IJoke[]>(localStorage.getItem(JOKES_KEY) ?? '[]'),
     favouriteJokes: parseJSON<IJoke[]>(
         localStorage.getItem(FAVOURITE_JOKES_KEY) ?? '[]'
