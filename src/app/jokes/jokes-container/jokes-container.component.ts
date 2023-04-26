@@ -3,7 +3,6 @@ import { IJoke, IJokeState } from '../jokes.models'
 import {
     Observable,
     Subject,
-    Subscription,
     interval,
     map,
     repeat,
@@ -25,7 +24,6 @@ export class JokesContainerComponent implements OnInit, OnDestroy {
     public jokes$: Observable<IJoke[]>
     public favouriteJokes$: Observable<IJoke[]>
     public timer$: Observable<{ isActive: boolean; interval: number }>
-    private intervalSubscription: Subscription
     private onDestroy$: Subject<void> = new Subject<void>()
 
     constructor(private store: Store<IJokeState>) {}
@@ -38,7 +36,6 @@ export class JokesContainerComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        this.intervalSubscription?.unsubscribe()
         this.store.dispatch(jokesActions.setTimer({ isActive: false }))
         this.onDestroy$.next()
     }
@@ -52,7 +49,7 @@ export class JokesContainerComponent implements OnInit, OnDestroy {
     }
 
     startGettingJobsAtIntervals(timeInterval: number) {
-        this.intervalSubscription = interval(timeInterval)
+        interval(timeInterval)
             .pipe(
                 switchMap(() => this.timer$),
                 takeWhile((data) => data.isActive),
